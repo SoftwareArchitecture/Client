@@ -12,12 +12,15 @@ import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
 import ac.at.tuwien.infosys.swa.audio.Fingerprint;
+import at.ac.tuwien.softwarearchitecture.swazam.client.gui.GUIController;
 import at.ac.tuwien.softwarearchitecture.swazam.client.util.ConfigurationManagement;
 import at.ac.tuwien.softwarearchitecture.swazam.common.infos.ClientInfo;
 import at.ac.tuwien.softwarearchitecture.swazam.common.infos.FingerprintSearchRequest;
 import at.ac.tuwien.softwarearchitecture.swazam.common.infos.ServerInfo;
+
 import java.io.StringWriter;
 import java.net.MalformedURLException;
+
 import javax.swing.JOptionPane;
 import javax.xml.bind.Marshaller;
 
@@ -25,13 +28,15 @@ public class ServerCommunicationManager implements IServerCommunicationManager {
 
     // to execute file searches asynchronously
     private ServerInfo serverInfo;
+    private GUIController controller;
 
-    public ServerCommunicationManager() {
+    public ServerCommunicationManager(GUIController controller) {
         super();
         this.serverInfo = ConfigurationManagement.loadServerInfo();
+        this.controller = controller;
     }
 
-    @Override
+   
     public String searchAudio(ClientInfo clientInfo, Fingerprint fingerprintToSearch) {
 
         String sessionKey = "";
@@ -54,7 +59,7 @@ public class ServerCommunicationManager implements IServerCommunicationManager {
             conn.setDoOutput(true);
             conn.setRequestMethod("POST");
             conn.setRequestProperty("Content-Type", "application/xml");
-            conn.setRequestProperty("Accept", "plain/txt");
+            conn.setRequestProperty("Accept", "text/plain");
             conn.setDoOutput(true);
 
             String input = stringWriter.getBuffer().toString();
@@ -134,8 +139,7 @@ public class ServerCommunicationManager implements IServerCommunicationManager {
                     Logger.getLogger(ServerCommunicationManager.class).log(Level.INFO, "Response from server " + response);
 
                 } while (response.contains("In Progress!"));
-
-                JOptionPane.showConfirmDialog(null, "Song found: " + response);
+                controller.sendResponse(response);
             }
         };
 

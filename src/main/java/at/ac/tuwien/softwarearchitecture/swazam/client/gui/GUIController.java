@@ -25,13 +25,17 @@ import at.ac.tuwien.softwarearchitecture.swazam.client.serverCommunication.IServ
 import at.ac.tuwien.softwarearchitecture.swazam.client.serverCommunication.ServerCommunicationManager;
 import at.ac.tuwien.softwarearchitecture.swazam.client.util.ConfigurationManagement;
 import at.ac.tuwien.softwarearchitecture.swazam.common.infos.ClientInfo;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.InputStream;
 import java.util.Date;
+
 import javax.sound.sampled.AudioInputStream;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
@@ -54,7 +58,7 @@ public class GUIController {
         clientInfo = ConfigurationManagement.loadClientInfo();
         audioManager = new AudioManager();
         fingerprintExtractorAndManager = new FingerprintExtractorAndManager();
-        serverCommunicationManager = new ServerCommunicationManager();
+        serverCommunicationManager = new ServerCommunicationManager(this);
     }
 
     {
@@ -86,12 +90,18 @@ public class GUIController {
         this.gui = gui;
         this.gui.addFileSelectActionListener(searchFileActionListener);
     }
+    
+    public void sendResponse(String response){
+    	 JOptionPane.showConfirmDialog(null, "Song found: " + response);
+    }
+    
     private ActionListener searchFileActionListener = new ActionListener() {
         public void actionPerformed(ActionEvent e) {
             JFileChooser theFileChooser = (JFileChooser) e.getSource();
             String command = e.getActionCommand();
             if (command.equals(JFileChooser.APPROVE_SELECTION)) {
                 File selectedFile = theFileChooser.getSelectedFile();
+                
                 Logger.getLogger(this.getClass()).log(Level.INFO, "Extracting audio stream for " + selectedFile.getName());
 
                 AudioInputStream stream = audioManager.submitAudioFile(selectedFile.getAbsolutePath());
