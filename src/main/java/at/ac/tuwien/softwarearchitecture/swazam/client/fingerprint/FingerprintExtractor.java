@@ -10,7 +10,7 @@ import ac.at.tuwien.infosys.swa.audio.FingerprintSystem;
 import java.io.IOException;
  
 
-public class FingerprintExtractorAndManager implements IFingerprintExtractorAndManager {
+public class FingerprintExtractor implements IFingerprintExtractor {
 
     public Fingerprint extractFingeprint(AudioInputStream audioInputStream) {
         Fingerprint fingerprint = null;

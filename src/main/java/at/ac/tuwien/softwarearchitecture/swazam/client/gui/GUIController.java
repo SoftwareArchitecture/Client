@@ -19,8 +19,8 @@ package at.ac.tuwien.softwarearchitecture.swazam.client.gui;
 import ac.at.tuwien.infosys.swa.audio.Fingerprint;
 import at.ac.tuwien.softwarearchitecture.swazam.client.audio.AudioManager;
 import at.ac.tuwien.softwarearchitecture.swazam.client.audio.IAudioManager;
-import at.ac.tuwien.softwarearchitecture.swazam.client.fingerprint.FingerprintExtractorAndManager;
-import at.ac.tuwien.softwarearchitecture.swazam.client.fingerprint.IFingerprintExtractorAndManager;
+import at.ac.tuwien.softwarearchitecture.swazam.client.fingerprint.FingerprintExtractor;
+import at.ac.tuwien.softwarearchitecture.swazam.client.fingerprint.IFingerprintExtractor;
 import at.ac.tuwien.softwarearchitecture.swazam.client.serverCommunication.IServerCommunicationManager;
 import at.ac.tuwien.softwarearchitecture.swazam.client.serverCommunication.ServerCommunicationManager;
 import at.ac.tuwien.softwarearchitecture.swazam.client.util.ConfigurationManagement;
@@ -49,7 +49,7 @@ import org.apache.log4j.PropertyConfigurator;
 public class GUIController {
 
     private IAudioManager audioManager;
-    private IFingerprintExtractorAndManager fingerprintExtractorAndManager;
+    private IFingerprintExtractor fingerprintExtractorAndManager;
     private IServerCommunicationManager serverCommunicationManager;
     private ClientInfo clientInfo;
     private Gui gui;
@@ -57,7 +57,7 @@ public class GUIController {
     {
         clientInfo = ConfigurationManagement.loadClientInfo();
         audioManager = new AudioManager();
-        fingerprintExtractorAndManager = new FingerprintExtractorAndManager();
+        fingerprintExtractorAndManager = new FingerprintExtractor();
         serverCommunicationManager = new ServerCommunicationManager(this);
     }
 
