@@ -19,7 +19,6 @@ import at.ac.tuwien.softwarearchitecture.swazam.common.infos.ServerInfo;
 import java.io.StringWriter;
 import java.net.MalformedURLException;
 import javax.swing.JOptionPane;
-import javax.ws.rs.core.MediaType;
 import javax.xml.bind.Marshaller;
 
 public class ServerCommunicationManager implements IServerCommunicationManager {
@@ -55,7 +54,7 @@ public class ServerCommunicationManager implements IServerCommunicationManager {
             conn.setDoOutput(true);
             conn.setRequestMethod("POST");
             conn.setRequestProperty("Content-Type", "application/xml");
-            conn.setRequestProperty("Accept", MediaType.TEXT_PLAIN);
+            conn.setRequestProperty("Accept", "plain/txt");
             conn.setDoOutput(true);
 
             String input = stringWriter.getBuffer().toString();
